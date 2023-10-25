@@ -12,6 +12,16 @@ public class CargoTarjeta {
     private String fechaExp;
     private Float costoRenta;
     
+    public CargoTarjeta(String noTC, String cvv, String fechaExp, Float costoRenta) {
+        super();
+        this.noTC = noTC;
+        this.cvv = cvv;
+        this.fechaExp = fechaExp;
+        this.costoRenta = costoRenta;
+    }
+    
+    public CargoTarjeta() {}
+    
     public String getNoTc() {
         return noTC;
     }

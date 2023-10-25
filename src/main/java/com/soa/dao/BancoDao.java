@@ -37,6 +37,7 @@ public class BancoDao {
        "SELECT noTC, cvv, fechaExp, saldo FROM Tarjetas WHERE noTC = '" + cargo.getNoTc() + 
        "' AND cvv = "+cargo.getCvv()+" AND fechaExp = '"+cargo.getFechaExp()+"'", 
        new BeanPropertyRowMapper<Tarjeta>(Tarjeta.class));
+       resp.setStatus(true);
        
        if(tarjetas.size()==1) {
            if(tarjetas.get(0).getSaldo()>=cargo.getCostoRenta()) {

@@ -25,7 +25,7 @@ public class BancoBusiness {
         Respuesta resp = new Respuesta();
         
          try {
-             if(bancoDao.find(cargo).getStatus()) {
+             if(!bancoDao.find(cargo).getStatus()) {
                  resp.setMessage("Datos de tarjeta correctos");
                  resp.setStatus(true);
              } 
@@ -67,37 +67,5 @@ public class BancoBusiness {
         return resp;
         
     }
-//    public Respuesta qry(Usuario usuario) {
-//        Respuesta respuesta = new Respuesta();
-//        try {
-//            List<Usuario> list = usuariosDao.query(usuario);
-//            respuesta.setMessage("OK");
-//            respuesta.setUsuarios(list);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            respuesta.setMessage("Error en BD al consultar login: "
-//                    + usuario.getLogin());
-////            respuesta.setMessage(e.getMessage());
-////            if (e instanceof SQLException) {
-////                respuesta.setMessage("Error" + e.ge 
-////            }
-//        }
-//        return respuesta;
-//    }
-//    
-//    public Respuesta procesar(Request request) {
-//        Respuesta respuesta = new Respuesta();
-//        try {
-//            List<Usuario> list = usuariosDao.query(usuario);
-//            respuesta.setMessage("OK");
-//            respuesta.setUsuarios(list);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            respuesta.setMessage("Error en BD al consultar login: "
-//                    + usuario.getLogin());
-//        }
-//        return respuesta;
-//    }
-//    
    
 }

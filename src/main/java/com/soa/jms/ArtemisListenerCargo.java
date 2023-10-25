@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.soa.business.BancoBusiness;
 import com.soa.dto.CargoTarjeta;
+import com.soa.dto.DatosRenta;
+import com.soa.dto.Renta;
 import com.soa.dto.Respuesta;
 
 /**
@@ -25,7 +27,7 @@ public class ArtemisListenerCargo {
     private JmsSender sender;
 
     /** Nombre de la cola de respuesta del microservicio. */
-    @Value("${cargo.queue.name.out}")
+    @Value("${streaming.queue.name.in}")
     private String outQueueName;
 
     @JmsListener(destination = "${cargo.queue.name.in}")
@@ -33,11 +35,16 @@ public class ArtemisListenerCargo {
         System.out.println(String.format("Received message: %s",
                 message));
         Gson gson = new Gson();
-        CargoTarjeta cargo = gson.fromJson(message, CargoTarjeta.class);
+        DatosRenta data = gson.fromJson(message, DatosRenta.class);
+        CargoTarjeta cargo = new CargoTarjeta(data.getTarjeta(), data.getCvv(), data.getFechaExp(),data.getCostoRenta());
         Respuesta respuesta = business.cargo(cargo);
+        Renta renta = new Renta();
+        renta.setNoTC(data.getTarjeta());
+        renta.setTime(data.getTiempo());
+        renta.setTitulo(data.getTitulo());
         System.out.println("Resultado de consulta: "+respuesta);
         try {
-            sender.sendMessage(respuesta.toString(), outQueueName);
+            sender.sendMessage(renta.toString(), outQueueName);
             System.out.println(String.format("Mensaje enviado: %s", 
                     respuesta.toString()));
         } catch(Exception e) {
